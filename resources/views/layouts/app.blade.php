@@ -50,11 +50,9 @@
             <div class="logo-header" data-background-color="blue">
 
                 <a href="{{route('dashboard')}}" class="logo">
-                    <img src="{{asset('assets/img/logo-admin.svg')}}" style="height: 20px" alt="navbar brand"
-                        class="navbar-brand">
+                    <span class="text-white">V-CARD</span>
                 </a>
-                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
-                    data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
                         <i class="icon-menu"></i>
                     </span>
@@ -86,8 +84,7 @@
                     </div> --}}
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
                         {{-- <li class="nav-item toggle-nav-search hidden-caret">
-                            <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button"
-                                aria-expanded="false" aria-controls="search-nav">
+                            <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
                                 <i class="fa fa-search"></i>
                             </a>
                         </li> --}}
@@ -95,8 +92,7 @@
                         <li class="nav-item dropdown hidden-caret">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <a class="nav-link" id="notifDropdown" title="Logout" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
+                                <a class="nav-link" id="notifDropdown" title="Logout" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                                                                         this.closest('form').submit();">
                                     <i class="fas fa-power-off"></i>
                                 </a>
@@ -130,11 +126,9 @@
                     <ul class="nav nav-primary">
                         @foreach (Auth::user()->menu_data as $menu)
                         @if ($menu->children && $menu->children->count() > 0)
-                        <li
-                            class="nav-item 
+                        <li class="nav-item 
                         @foreach ($menu->children as $children) {{request()->routeIs($children->menu_route) ? 'active show' : ''}} @endforeach ">
-                            <a data-toggle="collapse" href="#colapse-{{$menu->id}}" class="collapsed"
-                                aria-expanded="false">
+                            <a data-toggle="collapse" href="#colapse-{{$menu->id}}" class="collapsed" aria-expanded="false">
                                 <i class="{{$menu->menu_icon}}"></i>
                                 <p>{{$menu->menu_label}}</p>
                                 <span class="caret"></span>
@@ -174,8 +168,7 @@
                 <div class="container-fluid">
 
                     <div class="copyright ml-auto">
-                        {{date('Y')}}, made with <i class="fa fa-heart heart text-danger"></i> by <a
-                            href="http://www.themekita.com">ThemeKita</a>
+                        {{date('Y')}}, made with <i class="fa fa-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
                     </div>
                 </div>
             </footer>
