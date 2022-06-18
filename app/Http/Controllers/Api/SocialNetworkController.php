@@ -76,7 +76,6 @@ class SocialNetworkController extends Controller
                 'error' => true,
                 'status_code' => 400,
                 'message' => 'Data Gagal Disimpan',
-                'data' => $social_network,
             ];
             return response()->json($respon, 400);
         }
@@ -159,7 +158,6 @@ class SocialNetworkController extends Controller
                 'error' => true,
                 'status_code' => 400,
                 'message' => 'Data Gagal Disimpan',
-                'data' => $social_network,
             ];
             return response()->json($respon, 400);
         }

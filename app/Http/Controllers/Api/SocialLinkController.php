@@ -96,7 +96,6 @@ class SocialLinkController extends Controller
                 'error' => true,
                 'status_code' => 400,
                 'message' => 'Data Gagal Disimpan',
-                'data' => $social_link,
             ];
             return response()->json($respon, 400);
         }
@@ -203,7 +202,6 @@ class SocialLinkController extends Controller
                 'error' => true,
                 'status_code' => 400,
                 'message' => 'Data Gagal Disimpan',
-                'data' => $social_link,
             ];
             return response()->json($respon, 400);
         }
