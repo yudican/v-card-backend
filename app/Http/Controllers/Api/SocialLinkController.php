@@ -81,6 +81,7 @@ class SocialLinkController extends Controller
             ];
 
             $social_link = SocialLink::create($data);
+            DB::commit();
             $respon = [
                 'error' => false,
                 'status_code' => 200,
@@ -89,7 +90,6 @@ class SocialLinkController extends Controller
 
             ];
             return response()->json($respon, 200);
-            DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
             $respon = [
@@ -189,6 +189,7 @@ class SocialLinkController extends Controller
             }
 
             $social_link->update($data);
+            DB::commit();
             $respon = [
                 'error' => false,
                 'status_code' => 200,
@@ -196,7 +197,6 @@ class SocialLinkController extends Controller
                 'data' => $social_link,
             ];
             return response()->json($respon, 200);
-            DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
             $respon = [
@@ -219,6 +219,9 @@ class SocialLinkController extends Controller
     {
         $social_link = SocialLink::find($id);
         if ($social_link) {
+            if (Storage::exists('public/' . $social_link->image_link)) {
+                Storage::delete('public/' . $social_link->image_link);
+            }
             $social_link->delete();
             $respon = [
                 'error' => false,

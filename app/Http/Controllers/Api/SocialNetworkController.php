@@ -62,6 +62,7 @@ class SocialNetworkController extends Controller
             ];
 
             $social_network = SocialNetwork::create($data);
+            DB::commit();
             $respon = [
                 'error' => false,
                 'status_code' => 200,
@@ -69,7 +70,6 @@ class SocialNetworkController extends Controller
                 'data' => $social_network,
             ];
             return response()->json($respon, 200);
-            DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
             $respon = [
@@ -145,6 +145,7 @@ class SocialNetworkController extends Controller
 
             $social_network = SocialNetwork::find($id);
             $social_network->update($data);
+            DB::commit();
             $respon = [
                 'error' => false,
                 'status_code' => 200,
@@ -152,7 +153,6 @@ class SocialNetworkController extends Controller
                 'data' => $social_network,
             ];
             return response()->json($respon, 200);
-            DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
             $respon = [

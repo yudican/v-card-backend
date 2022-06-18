@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ContactInfoController;
 use App\Http\Controllers\Api\SocialLinkController;
 use App\Http\Controllers\Api\SocialNetworkController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,5 @@ Route::prefix('master')->middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('contact-info', ContactInfoController::class);
     Route::apiResource('social-link', SocialLinkController::class);
     Route::apiResource('social-network', SocialNetworkController::class);
+    Route::post('user/update-card', [UserController::class, 'update']);
 });

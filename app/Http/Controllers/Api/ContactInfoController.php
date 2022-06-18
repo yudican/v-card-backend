@@ -60,6 +60,7 @@ class ContactInfoController extends Controller
             ];
 
             $contact = ContactInfo::create($data);
+            DB::commit();
             $respon = [
                 'error' => false,
                 'status_code' => 200,
@@ -67,7 +68,6 @@ class ContactInfoController extends Controller
                 'data' => $contact,
             ];
             return response()->json($respon, 200);
-            DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
             $respon = [
@@ -141,6 +141,7 @@ class ContactInfoController extends Controller
 
             $contact = ContactInfo::find($id);
             $contact->update($data);
+            DB::commit();
             $respon = [
                 'error' => false,
                 'status_code' => 200,
@@ -148,7 +149,6 @@ class ContactInfoController extends Controller
                 'data' => $contact,
             ];
             return response()->json($respon, 200);
-            DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
             $respon = [
