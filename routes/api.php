@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login'])->name('user.login');
 });
-Route::prefix('master')->group(function () {
+Route::prefix('master')->middleware(['auth:sanctum'])->group(function () {
     // get api resource controller
     Route::apiResource('contact-info', ContactInfoController::class);
     Route::apiResource('social-link', SocialLinkController::class);
