@@ -39,7 +39,6 @@ class SocialLinkController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required',
             'url' => 'required',
-            'icon_path' => 'required',
             'image_link' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -76,7 +75,7 @@ class SocialLinkController extends Controller
             $data = [
                 'name'  => $request->name,
                 'url'  => $request->url,
-                'icon_path'  => $request->icon_path,
+                'icon_path'  => 'default',
                 'image_link' => $file,
                 'user_id'  => auth()->user()->id
             ];
@@ -141,7 +140,6 @@ class SocialLinkController extends Controller
         $validate = Validator::make($request->all(), [
             'name' => 'required',
             'url' => 'required',
-            'icon_path' => 'required',
         ]);
 
         if ($validate->fails()) {
