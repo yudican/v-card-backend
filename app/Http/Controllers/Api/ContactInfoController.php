@@ -74,6 +74,7 @@ class ContactInfoController extends Controller
                 'error' => true,
                 'status_code' => 400,
                 'message' => 'Data Gagal Disimpan',
+                'dev_message' => $th->getMessage(),
             ];
             return response()->json($respon, 400);
         }
@@ -154,6 +155,7 @@ class ContactInfoController extends Controller
                 'error' => true,
                 'status_code' => 400,
                 'message' => 'Data Gagal Disimpan',
+                'dev_message' => $th->getMessage(),
             ];
             return response()->json($respon, 400);
         }
