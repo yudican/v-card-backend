@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SocialLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SocialLinkController extends Controller
@@ -39,6 +40,7 @@ class SocialLinkController extends Controller
             'name' => 'required',
             'url' => 'required',
             'icon_path' => 'required',
+            'image_link' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validate->fails()) {
@@ -51,13 +53,31 @@ class SocialLinkController extends Controller
             return response()->json($respon, 401);
         }
 
+        if (!$request->hasFile('image_link')) {
+            return response()->json([
+                'error' => true,
+                'message' => 'File not found',
+                'status_code' => 400,
+            ], 400);
+        }
+        $file = $request->file('image_link');
+        if (!$file->isValid()) {
+            return response()->json([
+                'error' => true,
+                'message' => 'Image file not valid',
+                'status_code' => 400,
+            ], 400);
+        }
+
 
         try {
             DB::beginTransaction();
+            $file = $request->image_link->store('upload', 'public');
             $data = [
                 'name'  => $request->name,
                 'url'  => $request->url,
                 'icon_path'  => $request->icon_path,
+                'image_link' => $file,
                 'user_id'  => auth()->user()->id
             ];
 
@@ -67,6 +87,7 @@ class SocialLinkController extends Controller
                 'status_code' => 200,
                 'message' => 'Data Berhasil Disimpan',
                 'data' => $social_link,
+
             ];
             return response()->json($respon, 200);
             DB::commit();
@@ -133,6 +154,23 @@ class SocialLinkController extends Controller
             return response()->json($respon, 401);
         }
 
+        if ($request->image_link) {
+            if (!$request->hasFile('image_link')) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'File not found',
+                    'status_code' => 400,
+                ], 400);
+            }
+            $file = $request->file('image_link');
+            if (!$file->isValid()) {
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Image file not valid',
+                    'status_code' => 400,
+                ], 400);
+            }
+        }
 
         try {
             DB::beginTransaction();
@@ -142,8 +180,16 @@ class SocialLinkController extends Controller
                 'icon_path'  => $request->icon_path,
                 'user_id'  => auth()->user()->id
             ];
-
             $social_link = SocialLink::find($id);
+
+            if ($request->image_link) {
+                $file = $request->image_link->store('upload', 'public');
+                $data['image_link'] = $file;
+                if (Storage::exists('public/' . $social_link->image_link)) {
+                    Storage::delete('public/' . $social_link->image_link);
+                }
+            }
+
             $social_link->update($data);
             $respon = [
                 'error' => false,

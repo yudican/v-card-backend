@@ -13,7 +13,7 @@ class SocialLink extends Model
 
     //public $incrementing = false;
 
-    protected $fillable = ['name','url','icon_path','user_id'];
-    
+    protected $fillable = ['name', 'url', 'icon_path', 'user_id', 'image_link'];
+
     protected $dates = [];
 }
