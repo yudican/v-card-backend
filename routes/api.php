@@ -22,11 +22,11 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login'])->name('user.login');
 });
+Route::get('user/profile/{username}', [UserController::class, 'getUserProfile']);
 Route::prefix('master')->middleware(['auth:sanctum'])->group(function () {
     // get api resource controller
     Route::apiResource('contact-info', ContactInfoController::class);
     Route::apiResource('social-link', SocialLinkController::class);
     Route::apiResource('social-network', SocialNetworkController::class);
     Route::post('user/update-card', [UserController::class, 'update']);
-    Route::get('user/profile/{username}', [UserController::class, 'getUserProfile']);
 });
