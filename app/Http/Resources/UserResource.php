@@ -19,6 +19,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'username' => $this->username,
             'color' => $this->card_color,
+            'description' => $this->description,
             'job_title' => $this->job_title,
             'photo' => $this->rofile_photo_path,
             'default_photo' => $this->profile_photo_url,

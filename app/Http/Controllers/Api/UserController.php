@@ -13,9 +13,18 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function getUserProfile()
+    public function getUserProfile($username)
     {
-        $user = Auth::user();
+        $user = User::where('username', $username)->first();
+        if (!$user) {
+            $respon = [
+                'error' => true,
+                'status_code' => 400,
+                'message' => 'Data Tidak Ditemukan',
+                'data' => new UserResource($user),
+            ];
+            return response()->json($respon, 400);
+        }
         $respon = [
             'error' => false,
             'status_code' => 200,
