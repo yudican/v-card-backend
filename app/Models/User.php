@@ -35,6 +35,7 @@ class User extends Authenticatable
         'password',
         'job_title',
         'card_color',
+        'description',
         'profile_photo_path',
     ];
 
@@ -103,5 +104,23 @@ class User extends Authenticatable
         return $this->role->menus()->where('show_menu', 1)->with('children')->whereHas('roles', function ($query) use ($role_id) {
             return $query->where('role_id', $role_id);
         })->where('parent_id')->orderBy('menu_order', 'ASC')->get();
+    }
+
+    // hasmany contact info
+    public function contactInfos()
+    {
+        return $this->hasMany(ContactInfo::class);
+    }
+
+    // hasmany social link
+    public function socialLinks()
+    {
+        return $this->hasMany(SocialLink::class);
+    }
+
+    // social networks
+    public function socialNetworks()
+    {
+        return $this->hasMany(SocialNetwork::class);
     }
 }

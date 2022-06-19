@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,11 +13,24 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function getUserProfile()
+    {
+        $user = Auth::user();
+        $respon = [
+            'error' => false,
+            'status_code' => 200,
+            'message' => 'Data Ditemukan',
+            'data' => new UserResource($user),
+        ];
+        return response()->json($respon, 200);
+    }
     public function update(Request $request)
     {
         $validate = Validator::make($request->all(), [
+            'name' => 'required',
             'job_title' => 'required',
             'card_color' => 'required',
+            'description' => 'required',
         ]);
 
         if ($validate->fails()) {
@@ -52,6 +66,8 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
             $data = [
+                'name'  => $request->name,
+                'description'  => $request->description,
                 'job_title'  => $request->job_title,
                 'card_color'  => $request->card_color,
             ];
@@ -71,7 +87,7 @@ class UserController extends Controller
                 'error' => false,
                 'status_code' => 200,
                 'message' => 'Data Berhasil Diperbarui',
-                'data' => $user,
+                'data' => new UserResource($user),
             ];
             return response()->json($respon, 200);
         } catch (\Throwable $th) {
