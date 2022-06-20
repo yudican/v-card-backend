@@ -25,6 +25,9 @@ class UserTable extends LivewireDatatable
     return [
       Column::name('id')->label('No.'),
       Column::name('name')->label('Name')->searchable(),
+      Column::callback('username', function ($username) {
+        return '<a href="https://zeto.link/' . $username . '" target="_blank">' . $username . '</a>';
+      })->label('Username')->searchable(),
       Column::name('email')->label('Email')->searchable(),
 
       Column::callback(['id'], function ($id) {
