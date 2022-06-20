@@ -15,7 +15,9 @@ class UserTable extends LivewireDatatable
 
   public function builder()
   {
-    return User::query();
+    return User::query()->whereHas('roles', function ($query) {
+      $query->where('role_type', 'member');
+    });
   }
 
   public function columns()
