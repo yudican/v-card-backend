@@ -91,11 +91,6 @@ class User extends Component
             }
         }
         $user->update($data);
-
-        $team = Team::find($this->team_id);
-        $team->users()->sync($user, ['role' => $role->role_type]);
-        $role->users()->sync($user);
-
         $this->_reset();
         $this->username = Str::random(8);
         return $this->emit('showAlert', ['msg' => 'Data Berhasil Diupdate']);
