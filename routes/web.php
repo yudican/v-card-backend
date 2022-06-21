@@ -10,8 +10,9 @@ use App\Http\Livewire\UserManagement\Role;
 use App\Http\Livewire\UserManagement\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Master\ContactInfoController;
-use App\Http\Livewire\Master\SocialLinkController;
+
 use App\Http\Livewire\Master\SocialNetworkController;
+use App\Http\Livewire\Master\SocialLinkController;
 // [route_import_path]
 
 /*
@@ -48,8 +49,9 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.authorization']
     // Master data
 
     Route::get('/contact-infos', ContactInfoController::class)->name('contact-infos');
-    Route::get('/social-links', SocialLinkController::class)->name('social-links');
+
     Route::get('/social-networks', SocialNetworkController::class)->name('social-networks');
+    Route::get('/social-links', SocialLinkController::class)->name('social-links');
     // [route_path]
 
 });

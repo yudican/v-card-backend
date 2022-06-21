@@ -25,9 +25,14 @@ class SocialLinkTable extends LivewireDatatable
         $this->hide = HideableColumn::where(['table_name' => $this->table_name, 'user_id' => auth()->user()->id])->pluck('column_name')->toArray();
         return [
             Column::name('id')->label('No.'),
+            Column::name('icon_path')->label('Icon Path')->searchable(),
+            Column::callback(['image_link'], function ($image) {
+                return view('livewire.components.photo', [
+                    'image_url' => asset('storage/' . $image),
+                ]);
+            })->label(__('Image Link')),
             Column::name('name')->label('Name')->searchable(),
             Column::name('url')->label('Url')->searchable(),
-            Column::name('icon_path')->label('Icon Path')->searchable(),
             Column::name('user_id')->label('User Id')->searchable(),
 
             Column::callback(['id'], function ($id) {

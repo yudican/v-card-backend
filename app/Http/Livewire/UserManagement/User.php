@@ -6,11 +6,14 @@ use App\Models\Role;
 use App\Models\Team;
 use App\Models\User as ModelsUser;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Str;
 
 class User extends Component
 {
+    use WithFileUploads;
     public $users_id;
     public $role_id;
     public $team_id = 1;
@@ -18,6 +21,8 @@ class User extends Component
     public $name;
     public $email;
     public $password;
+    public $vcf_info;
+    public $vcf_info_path;
 
 
     public $form_active = false;
@@ -43,12 +48,21 @@ class User extends Component
     {
         $this->_validate();
         $role = Role::find($this->role_id);
-        $user = ModelsUser::create([
+
+        $data = [
             'username'  => $this->username,
             'name'  => $this->name,
             'email'  => $this->email,
             'password'  => Hash::make($role->role_type . '123')
-        ]);
+        ];
+        if ($this->vcf_info_path) {
+            $vcf_info = $this->vcf_info_path->store('upload/vcf_info', 'public');
+            $data['vcf_info'] = $vcf_info;
+        }
+
+        $user = ModelsUser::create($data);
+
+
 
         $team = Team::find($this->team_id);
         $team->users()->attach($user, ['role' => $role->role_type]);
@@ -63,10 +77,20 @@ class User extends Component
         $this->_validate();
         $user = ModelsUser::find($this->users_id);
         $role = Role::find($this->role_id);
-        $user->update([
+
+        $data = [
             'name'  => $this->name,
             'email'  => $this->email,
-        ]);
+        ];
+
+        if ($this->vcf_info_path) {
+            $vcf_info = $this->vcf_info_path->store('upload/vcf_info', 'public');
+            $data = ['vcf_info' => $vcf_info];
+            if (Storage::exists('public/' . $this->vcf_info)) {
+                Storage::delete('public/' . $this->vcf_info);
+            }
+        }
+        $user->update($data);
 
         $team = Team::find($this->team_id);
         $team->users()->sync($user, ['role' => $role->role_type]);
@@ -104,6 +128,8 @@ class User extends Component
         $this->username = $users->username;
         $this->email = $users->email;
         $this->password = $users->password;
+        $this->vcf_info = $users->vcf_info;
+        $this->role_id = $users->role->id;
         if ($this->form) {
             $this->form_active = true;
             $this->emit('loadForm');

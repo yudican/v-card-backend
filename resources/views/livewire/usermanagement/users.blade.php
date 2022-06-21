@@ -36,6 +36,7 @@
                         <x-text-field type="text" name="username" label="Username" readonly />
                         <x-text-field type="text" name="name" label="name" />
                         <x-text-field type="text" name="email" label="email" />
+                        <x-input-file file="{{$vcf_info}}" name="vcf_info_path" path="{{optional($vcf_info_path)->getClientOriginalName()}}" label="VCF" />
                         <x-select name="role_id" label="Pilih Role">
                             <option value="">Pilih Role</option>
                             @foreach ($roles as $role)

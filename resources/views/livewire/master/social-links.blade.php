@@ -34,9 +34,11 @@
                         <h5 class="modal-title text-capitalize" id="my-modal-title">{{$update_mode ? 'Update' : 'Tambah'}} tbl social links</h5>
                     </div>
                     <div class="modal-body">
-                        <x-text-field type="text" name="name" label="Name" />
+                        <x-text-field type="text" name="icon_path" label="Icon Path" />
+<x-input-photo foto="{{$image_link}}" path="{{optional($image_link_path)->temporaryUrl()}}"
+                            name="image_link_path"  label="Image Link" />
+<x-text-field type="text" name="name" label="Name" />
 <x-text-field type="text" name="url" label="Url" />
-<x-text-field type="text" name="icon_path" label="Icon Path" />
 <x-text-field type="text" name="user_id" label="User Id" />
                     </div>
                     <div class="modal-footer">
