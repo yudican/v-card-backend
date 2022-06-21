@@ -2,7 +2,7 @@
   <label>{{$label}}</label>
   <div class="input-group">
     <div class="custom-file">
-      <input type="file" class="custom-file-input" id="{{$name}}" wire:model="{{$name}}" accept="application/pdf">
+      <input type="file" class="custom-file-input" id="{{$name}}" wire:model="{{$name}}">
       @if ($file)
       @if ($path)
       <label class="custom-file-label" for="{{$name}}">{{$path}}</label>
