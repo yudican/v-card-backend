@@ -128,7 +128,7 @@ class User extends Component
         $this->username = $users->username;
         $this->email = $users->email;
         $this->password = $users->password;
-        $this->vcf_info = $users->vcf_info;
+        $this->vcf_info = cropString($users->vcf_info);
         $this->role_id = $users->role->id;
         if ($this->form) {
             $this->form_active = true;
@@ -148,12 +148,14 @@ class User extends Component
 
     public function toggleForm($form)
     {
+
         $this->form_active = $form;
         $this->emit('loadForm');
     }
 
     public function showModal()
     {
+        $this->username = Str::random(8);
         $this->emit('showModal');
     }
 
@@ -167,6 +169,8 @@ class User extends Component
         $this->name = null;
         $this->email = null;
         $this->password = null;
+        $this->vcf_info = null;
+        $this->vcf_info_path = null;
         $this->form = false;
         $this->form_active = false;
         $this->update_mode = false;

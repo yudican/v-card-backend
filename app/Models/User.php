@@ -37,6 +37,7 @@ class User extends Authenticatable
         'card_color',
         'description',
         'profile_photo_path',
+        'vcf_info'
     ];
 
     /**
