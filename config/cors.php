@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', '*'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'storage/*', 'storage/upload/*', 'storage/upload/vcf/*', '*'],
 
     'allowed_methods' => ['POST', 'GET', 'DELETE', 'PUT', '*'],
 
-    'allowed_origins' => ['http://localhost:3000', 'https://zeto.link'],
+    'allowed_origins' => ['http://localhost:3000', 'https://zeto.link', '*'],
 
     'allowed_origins_patterns' => [],
 
