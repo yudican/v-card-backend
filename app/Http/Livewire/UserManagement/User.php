@@ -57,9 +57,9 @@ class User extends Component
         ];
         if ($this->vcf_info_path) {
             $name =  $this->vcf_info_path->getClientOriginalName() . '.vcf';
-            $vcf_info = $this->vcf_info_path->storeAs('public/upload/vcf_info', $name);
+            $this->vcf_info_path->storeAs('public/upload/vcf_info', $name);
             // $vcf_info = $this->vcf_info_path->store('upload/vcf_info', 'public');
-            $data['vcf_info'] = str_replace('/public', '', $vcf_info);
+            $data['vcf_info'] = 'upload/vcf_info/' . $name;
         }
 
         $user = ModelsUser::create($data);
@@ -87,8 +87,8 @@ class User extends Component
 
         if ($this->vcf_info_path) {
             $name =  $this->vcf_info_path->getClientOriginalName();
-            $vcf_info = $this->vcf_info_path->storeAs('public/upload/vcf_info', $name);
-            $data['vcf_info'] = str_replace('/public', '', $vcf_info);
+            $this->vcf_info_path->storeAs('public/upload/vcf_info', $name);
+            $data['vcf_info'] = 'upload/vcf_info/' . $name;
             if (Storage::exists('public/' . $this->vcf_info)) {
                 Storage::delete('public/' . $this->vcf_info);
             }
