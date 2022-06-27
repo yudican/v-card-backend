@@ -56,10 +56,10 @@ class User extends Component
             'password'  => Hash::make($role->role_type . '123')
         ];
         if ($this->vcf_info_path) {
-            $name =  $this->vcf_info_path->getClientOriginalName() . '.vcf';
-            $this->vcf_info_path->storeAs('public/upload/vcf_info', $name);
-            // $vcf_info = $this->vcf_info_path->store('upload/vcf_info', 'public');
-            $data['vcf_info'] = 'upload/vcf_info/' . $name;
+            // $name =  $this->vcf_info_path->getClientOriginalName() . '.vcf';
+            // $this->vcf_info_path->storeAs('public/upload/vcf_info', $name);
+            $vcf_info = $this->vcf_info_path->store('upload/vcf_info', 'public');
+            $data['vcf_info'] = $vcf_info;
         }
 
         $user = ModelsUser::create($data);
@@ -86,9 +86,10 @@ class User extends Component
         ];
 
         if ($this->vcf_info_path) {
-            $name =  $this->vcf_info_path->getClientOriginalName();
-            $this->vcf_info_path->storeAs('public/upload/vcf_info', $name);
-            $data['vcf_info'] = 'upload/vcf_info/' . $name;
+            // $name =  $this->vcf_info_path->getClientOriginalName();
+            // $this->vcf_info_path->storeAs('public/upload/vcf_info', $name);
+            $vcf_info = $this->vcf_info_path->store('upload/vcf_info', 'public');
+            $data['vcf_info'] = $vcf_info;
             if (Storage::exists('public/' . $this->vcf_info)) {
                 Storage::delete('public/' . $this->vcf_info);
             }
