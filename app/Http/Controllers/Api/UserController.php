@@ -110,4 +110,18 @@ class UserController extends Controller
             return response()->json($respon, 400);
         }
     }
+
+    public function getFileContact($user_id)
+    {
+        // file vcf berdasarkan user_id
+        $user = User::find($user_id);
+        $file = $user->vcf_info;
+
+        // download file vcf
+        $headers = [
+            'Content-Type' => 'text/x-vcard',
+            'Content-Disposition' => 'attachment; filename="' . $user->name . '.vcf"',
+        ];
+        return response()->download(storage_path('app/public/' . $file), $user->name . '.vcf', $headers);
+    }
 }
