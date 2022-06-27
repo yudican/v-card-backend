@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             'job_title' => $this->job_title,
             'photo' => $this->rofile_photo_path,
             'default_photo' => $this->profile_photo_url,
+            'vcf_info' => $this->vcf_info,
             'details' => [
                 'contactInfo' => $this->contactInfos,
                 'socialLink' => $this->socialLinks,
