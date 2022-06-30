@@ -134,15 +134,16 @@ class UserController extends Controller
             'new_password' => 'required|min:8',
             'confirm_password' => 'required|same:new_password',
         ]);
-        if ($validate->fails()) {
+        if ($request->new_password != $request->confirm_password) {
             $respon = [
                 'error' => true,
                 'status_code' => 401,
-                'message' => 'Silahkan Isi Semua Form',
+                'message' => 'Password Baru Tidak Sama',
                 'messages' => $validate->errors(),
             ];
             return response()->json($respon, 401);
         }
+
         $user = User::find(auth()->user()->id);
         if (Hash::check($request->old_password, $user->password)) {
             $user->password = Hash::make($request->new_password);
