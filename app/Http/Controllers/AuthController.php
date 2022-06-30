@@ -29,6 +29,10 @@ class AuthController extends Controller
             return redirect('login')->with(['error' => 'Username tidak terdaftar']);
         }
 
+        if ($user->role->role_type == 'member') {
+            return redirect('login')->with(['error' => 'Maaf, Anda tidak memiliki akses untuk login']);
+        }
+
         $credentials = request(['email', 'password']);
         if (!Auth::attempt($credentials)) {
             return redirect('login')->with(['error' => 'Username atau password salah']);

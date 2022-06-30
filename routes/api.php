@@ -29,6 +29,7 @@ Route::prefix('master')->middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('social-link', SocialLinkController::class);
     Route::apiResource('social-network', SocialNetworkController::class);
     Route::post('user/update-card', [UserController::class, 'update']);
+    Route::post('user/update-password', [UserController::class, 'updatePassword']);
 });
 
 Route::get('user/get-contact/{user_id}', [UserController::class, 'getFileContact']);

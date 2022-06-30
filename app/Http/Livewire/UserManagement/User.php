@@ -76,14 +76,22 @@ class User extends Component
 
     public function update()
     {
+        $userName = ModelsUser::where('username', $this->username)->where('id', '!=', $this->users_id)->first();
+        if ($userName) {
+            $this->addError('username', 'Username Sudah Terdaftar');
+        }
         $this->_validate();
         $user = ModelsUser::find($this->users_id);
-        $role = Role::find($this->role_id);
 
         $data = [
             'name'  => $this->name,
             'email'  => $this->email,
+            'username'  => $this->username,
         ];
+
+        if ($this->password) {
+            $data['password'] = Hash::make($this->password);
+        }
 
         if ($this->vcf_info_path) {
             // $name =  $this->vcf_info_path->getClientOriginalName();
@@ -113,6 +121,7 @@ class User extends Component
         $rule = [
             'name'  => 'required',
             'email'  => 'required',
+            'username'  => 'required',
             'role_id'  => 'required'
         ];
 
@@ -126,7 +135,6 @@ class User extends Component
         $this->name = $users->name;
         $this->username = $users->username;
         $this->email = $users->email;
-        $this->password = $users->password;
         $this->vcf_info = cropString($users->vcf_info);
         $this->role_id = $users->role->id;
         if ($this->form) {

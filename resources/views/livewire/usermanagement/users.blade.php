@@ -33,7 +33,12 @@
                             {{$update_mode ? 'Tambah' : 'Update'}} users</h5>
                     </div>
                     <div class="modal-body">
+                        @if ($update_mode)
+                        <x-text-field type="text" name="username" label="Username" />
+                        @else
                         <x-text-field type="text" name="username" label="Username" readonly />
+                        @endif
+
                         <x-text-field type="text" name="name" label="name" />
                         <x-text-field type="text" name="email" label="email" />
                         <x-input-file file="{{$vcf_info}}" name="vcf_info_path" path="{{optional($vcf_info_path)->getClientOriginalName()}}" label="VCF" />
@@ -43,6 +48,9 @@
                             <option value="{{$role->id}}">{{$role->role_name}}</option>
                             @endforeach
                         </x-select>
+                        @if ($update_mode)
+                        <x-text-field type="password" name="password" label="password" />
+                        @endif
                     </div>
                     <div class="modal-footer">
                         <button type="button" wire:click={{$update_mode ? 'update' : 'store' }} class="btn btn-primary btn-sm"><i class="fa fa-check pr-2"></i>Simpan</button>

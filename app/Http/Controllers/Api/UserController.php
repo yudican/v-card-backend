@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -123,5 +124,44 @@ class UserController extends Controller
             'Content-Disposition' => 'attachment; filename="' . $user->name . '.vcf"',
         ];
         return response()->download(storage_path('app/public/' . $file), $user->name . '.vcf', $headers);
+    }
+
+    // update password
+    public function updatePassword(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'old_password' => 'required',
+            'new_password' => 'required|min:8',
+            'confirm_password' => 'required|same:new_password',
+        ]);
+        if ($validate->fails()) {
+            $respon = [
+                'error' => true,
+                'status_code' => 401,
+                'message' => 'Silahkan Isi Semua Form',
+                'messages' => $validate->errors(),
+            ];
+            return response()->json($respon, 401);
+        }
+        $user = User::find(auth()->user()->id);
+        if (Hash::check($request->old_password, $user->password)) {
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+            $respon = [
+                'error' => false,
+                'status_code' => 200,
+                'message' => 'Password Berhasil Diperbarui',
+                'data' => new UserResource($user),
+            ];
+            return response()->json($respon, 200);
+        } else {
+            $respon = [
+                'error' => true,
+                'status_code' => 400,
+                'message' => 'Password Lama Salah',
+                'data' => new UserResource($user),
+            ];
+            return response()->json($respon, 400);
+        }
     }
 }
