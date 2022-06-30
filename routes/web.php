@@ -13,6 +13,8 @@ use App\Http\Livewire\Master\ContactInfoController;
 
 use App\Http\Livewire\Master\SocialNetworkController;
 use App\Http\Livewire\Master\SocialLinkController;
+use App\Http\Livewire\UpdateProfile;
+
 // [route_import_path]
 
 /*
@@ -43,6 +45,7 @@ Route::group(['middleware' => ['auth:sanctum', 'verified', 'user.authorization']
     Route::get('/user', User::class)->name('user');
     Route::get('/menu', Menu::class)->name('menu');
 
+    Route::get('/update-profile', UpdateProfile::class)->name('update-profile');
     // App Route
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
