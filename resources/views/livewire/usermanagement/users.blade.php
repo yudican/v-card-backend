@@ -33,12 +33,7 @@
                             {{$update_mode ? 'Tambah' : 'Update'}} users</h5>
                     </div>
                     <div class="modal-body">
-                        @if ($update_mode)
                         <x-text-field type="text" name="username" label="Username" />
-                        @else
-                        <x-text-field type="text" name="username" label="Username" readonly />
-                        @endif
-
                         <x-text-field type="text" name="name" label="name" />
                         <x-text-field type="text" name="email" label="email" />
                         <x-input-file file="{{$vcf_info}}" name="vcf_info_path" path="{{optional($vcf_info_path)->getClientOriginalName()}}" label="VCF" />

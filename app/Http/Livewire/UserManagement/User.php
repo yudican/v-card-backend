@@ -46,6 +46,10 @@ class User extends Component
 
     public function store()
     {
+        $userName = ModelsUser::where('username', $this->username)->first();
+        if ($userName) {
+            $this->addError('username', 'Username Sudah Terdaftar');
+        }
         $this->_validate();
         $role = Role::find($this->role_id);
 
