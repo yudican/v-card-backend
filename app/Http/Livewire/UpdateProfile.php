@@ -27,7 +27,6 @@ class UpdateProfile extends Component
         $user = auth()->user();
 
         $this->user_profile_photo = $user->profile_photo_path;
-        $this->user_profile_photo_path = $user->profile_photo_path;
         $this->email = $user->email;
         $this->name = $user->name;
         if ($user->role->role_type == 'member') {
@@ -49,13 +48,11 @@ class UpdateProfile extends Component
             'name'  => $this->name,
         ];
 
-        if ($user->profile_photo_path) {
-            if ($this->user_profile_photo_path) {
-                $user_profile_photo = $this->user_profile_photo_path->store('upload', 'public');
-                $data = ['profile_photo_path' => $user_profile_photo];
-                if (Storage::exists('public/' . $this->user_profile_photo)) {
-                    Storage::delete('public/' . $this->user_profile_photo);
-                }
+        if ($this->user_profile_photo_path) {
+            $user_profile_photo = $this->user_profile_photo_path->store('upload', 'public');
+            $data = ['profile_photo_path' => $user_profile_photo];
+            if (Storage::exists('public/' . $this->user_profile_photo)) {
+                Storage::delete('public/' . $this->user_profile_photo);
             }
         }
 
